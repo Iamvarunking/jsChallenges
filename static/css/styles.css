@@ -1,4 +1,4 @@
-.container-1, .container-2{
+.container-1, .container-2, .container-3{
     border: 1px solid red;
     margin: 20px auto;
     width: 75%;
@@ -6,7 +6,7 @@
 }
 
 
-.flex-box-container-1, .flex-box-container-2 {
+.flex-box-container-1, .flex-box-container-2, .flex-box-container-3{
     display: flex;
     border:1px solid black;
     padding: 10px;
@@ -34,4 +34,8 @@
 .flex-box-container-2 div img{
     margin: 20px;
     box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.7);
+}
+
+.flex-box-container-3 img:hover {
+    box-shadow: 0px 10px 50px rgba(37, 50, 233, 1);
 }
