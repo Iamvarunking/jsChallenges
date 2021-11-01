@@ -181,3 +181,25 @@ function buttonColorReset() {
         allButton[i].classList.add(copyAllButton[i]);
     }
 }
+
+
+// challenage 5: blackjack
+let blackjackGame = {
+    'you':{'scoreSpan': '#your-result', 'div':'.your-box', 'score':0},
+    'dealer':{'scoreSpan': '#dealer-result', 'div':'.dealer-box', 'score':0},
+}
+
+const YOU = blackjackGame['you'];
+const DEALER = blackjackGame['dealer'];
+
+const hitSound = new Audio('static/sounds/swish.m4a');
+
+document.querySelector('#hit').addEventListener('click', blackjackHit);
+
+function blackjackHit() {
+    let cardImage = document.createElement('img');
+    cardImage.src = 'static/images/q.png';
+    cardImage.height = "200px";
+    document.querySelector(YOU['div']).appendChild(cardImage);
+    hitSound.play();
+}

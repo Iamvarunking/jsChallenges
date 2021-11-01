@@ -19,7 +19,8 @@
     background: url('./../images/SL_120319_25700_14.jpg'), center;
     background-size:cover ;
     color: #ffffff;
-    height:600px
+    height:600px;
+    flex-wrap: wrap;
 }
 
 .flex-box-container-5 .row-1 div {
@@ -28,6 +29,13 @@
     flex: 1;
     height: 550px;
     text-align: center;
+}
+
+
+.flex-box-container-5 .row-1 .your-box img {
+    height: 120px;
+    margin: 10px;
+    box-sizing: border-box;
 }
 
 .container-5 .flex-box-container-5 .row-2 div {
