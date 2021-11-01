@@ -42,6 +42,7 @@
             </div>
         </div>
     </div>
+
         <!-- Rock papper scissors -->
         <div class="container-3">
             <h2>Challenge 3: Rock, Paper, Scissors</h2>
@@ -49,6 +50,26 @@
                 <img id="rock" src="https://pixabay.com/get/g238fb33639d44daa5901b1c16c11f1acddbeee8caa856420ef4ad5f36afc93758265e7a9137754fc34d1bddde9aaf82a489c0b8cf7b0cabb68ab0208ef1bac3df7c0cc528d565f44a76f0bb44c58deb1_1920.png" height=150 width=150 onclick="rpsGame(this)" alt="">
                 <img id="paper" src="https://pixabay.com/get/g164856742b03fb7b9d676624d955242763dda51548fd97555d1257d82a9b859624555a27cbb51eafa83cd994bc7640dc05b8b0e60165e803f2ba542ad2093aecb348624fcedc0baf2c7ceccb39d84551_1920.png" height=150 width=150 onclick="rpsGame(this)" alt="">
                 <img id="scissors" src="https://thumbs.dreamstime.com/b/female-hand-sign-victory-sign-peace-sign-scissors-vector-color-flat=illustration-isolated-white-background-web-83128345.jpg" height=150 width=150 onclick="rpsGame(this)" alt="">
+            </div>
+        </div>
+
+        <!-- Rock papper scissors -->
+        <div class="container-4">
+            <h2>Challenge 4: Change the Color of All Buttons!</h2>
+            <div id="flex-box-container-4" class="flex-box-container-4">
+                <form action="">
+                    <select name="changeColor" id="changeColor" onchange="buttonColorChange(this)">
+                        <option value="random">Random</option>
+                        <option value="red">Red</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="green">Green</option>
+                        <option value="reset">Reset</option>
+                    </select>
+                </form>
+                <button class="btn btn-primary">Wee!</button>
+                <button class="btn btn-danger">Yahoo!</button>
+                <button class="btn btn-warning">Google!</button>
+                <button class="btn btn-success">Facebook!</button>
             </div>
         </div>
     <script src="static/js/script.js"></script>

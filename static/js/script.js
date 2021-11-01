@@ -117,3 +117,67 @@ function rpsFrontEnd(humanImageChoice, botImageChoice, finalMassage) {
     botDiv.innerHTML = "<img src='" +imagesDatabase[botImageChoice]+ "' height=150 width=150 style='box-shadow: 0px 10px 50px rgba(243, 38, 24, 1);'>"
     document.getElementById('flex-box-container-3').appendChild(botDiv);
 }
+
+//Challenge 4: change color of all button
+
+let allButton = document.getElementsByTagName('button');
+console.log(allButton);
+
+let copyAllButton = [];
+for(let i=0; i<allButton.length; i++) {
+    copyAllButton.push(allButton[i].classList[1]);
+}
+
+console.log(copyAllButton);
+
+function buttonColorChange(colorName) {
+    if(colorName.value === 'red') {
+        buttonsRed();
+    } else if(colorName.value === 'green') {
+        buttonsGreen();
+    } else if(colorName.value === 'yellow') {
+        buttonsYellow();
+    } else if(colorName.value === 'random') {
+        buttonRandomColors()
+    } else if(colorName.value === 'reset') {
+        buttonColorReset();
+    }
+}
+
+function buttonsRed() {
+    for(let i=0; i<allButton.length; i++) {
+        allButton[i].classList.remove(allButton[i].classList[1]);
+        allButton[i].classList.add('btn-danger');
+    }
+}
+
+function buttonsGreen() {
+    for(let i=0; i<allButton.length; i++) {
+        allButton[i].classList.remove(allButton[i].classList[1]);
+        allButton[i].classList.add('btn-success');
+    }
+}
+
+function buttonsYellow() {
+    for(let i=0; i<allButton.length; i++) {
+        allButton[i].classList.remove(allButton[i].classList[1]);
+        allButton[i].classList.add('btn-warning');
+    }
+}
+
+function buttonRandomColors(){
+    let classArray = ['btn-primary', 'btn-success', 'btn-danger' , 'btn-warning'];
+    for(let i=0; i<allButton.length; i++) {
+        allButton[i].classList.remove(allButton[i].classList[1]);
+        let randomNumbers = Math.floor(Math.random() * 4);
+        let randomColors = classArray[randomNumbers];
+        allButton[i].classList.add(randomColors);
+    }
+}
+
+function buttonColorReset() {
+    for(let i=0; i<allButton.length; i++) {
+        allButton[i].classList.remove(allButton[i].classList[1]);
+        allButton[i].classList.add(copyAllButton[i]);
+    }
+}
