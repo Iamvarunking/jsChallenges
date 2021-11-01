@@ -1,4 +1,4 @@
-.container-1, .container-2, .container-3, .container-4{
+.container-1, .container-2, .container-3, .container-4, .container-5{
     border: 1px solid red;
     margin: 20px auto;
     width: 75%;
@@ -6,13 +6,44 @@
 }
 
 
-.flex-box-container-1, .flex-box-container-2, .flex-box-container-3, .flex-box-container-4{
+.flex-box-container-1, .flex-box-container-2, .flex-box-container-3, .flex-box-container-4, .flex-box-container-5 .row-1, .flex-box-container-5 .row-2, .flex-box-container-5 .row-3 {
     display: flex;
     border:1px solid black;
     padding: 10px;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.flex-box-container-5 .row-1 {
+    background: url('./../images/SL_120319_25700_14.jpg'), center;
+    background-size:cover ;
+    color: #ffffff;
+    height:600px
+}
+
+.flex-box-container-5 .row-1 div {
+    border: 1px solid white;
+    padding: 10px;
+    flex: 1;
+    height: 550px;
+    text-align: center;
+}
+
+.container-5 .flex-box-container-5 .row-2 div {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.container-5 .flex-box-container-5 .row-2 button {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+table, th, td{
+    padding: 5px;
+    border: 1px solid black;
+
 }
 
 .flex-box-container-1 div {
