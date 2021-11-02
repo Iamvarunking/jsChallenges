@@ -189,6 +189,9 @@ let blackjackGame = {
     'dealer':{'scoreSpan': '#dealer-result', 'div':'.dealer-box', 'score':0},
     'cards': ['5', '6', '7', '8', '9', '10', 'K', 'J', 'Q', 'A'],
     'cardsMap': {'5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'K':10, 'J':10, 'Q':10, 'A':[1,11]},
+    'wins':0,
+    'losts':0,
+    'draws':0,
 }
 
 const YOU = blackjackGame['you'];
@@ -217,10 +220,13 @@ function blackjackStand(){
     showCard(cards,DEALER);
     updateScore(cards,DEALER);
     showScore(DEALER);
+
+    if (DEALER['score'] > 15) {
+        showResult(computeWinner());
+    }
 }
 
 function blackjackDeal() {
-    showResult(computeWinner());
     removeCard(YOU,DEALER);
     removeScore(YOU,DEALER);
 }
@@ -291,24 +297,25 @@ function computeWinner() {
     if(YOU['score'] <= 21){
         if (YOU['score'] > DEALER['score'] || DEALER['score'] > 21) {
             winner = YOU;
-            console.log('you won!');
+            blackjackGame['wins']++;
 
         }else if (YOU['score'] < DEALER['score']) {
             winner = DEALER;
-            console.log('Dealer won!!!');
+            blackjackGame['losts']++;
 
         }else if (YOU['score'] === DEALER['score']) {
-            console.log('Its draw');
-            console.log('loda');
+            blackjackGame['draws']++;
+            
         }
 
     }else if (YOU['score'] > 21 && DEALER['score'] <= 21) {
         winner = DEALER;
-        console.log('Dealer won!!!');
+        blackjackGame['losts']++;
 
     }else if (YOU['score'] > 21 && DEALER['score'] > 21) {
-        console.log('its Draw!!!');
+        blackjackGame['draws']++;
     }
+    console.log(blackjackGame);
     return winner;
 }
 
@@ -316,14 +323,17 @@ function computeWinner() {
 function showResult(winner) {
     let message, messageColor; 
     if(winner === YOU) {
+        document.querySelector('.wins').textContent = blackjackGame['wins'];
         message = "You won!";
         messageColor = "green";
         winSound.play();
     } else if (winner === DEALER) {
+        document.querySelector('.losses').textContent = blackjackGame['losts'];
         message = "You lost!";
         messageColor = "red";
         lostSound.play();
     }else {
+        document.querySelector('.draws').textContent = blackjackGame['draws'];
         message = "You drew";
         messageColor = "black";
     }
