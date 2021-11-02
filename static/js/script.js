@@ -187,19 +187,147 @@ function buttonColorReset() {
 let blackjackGame = {
     'you':{'scoreSpan': '#your-result', 'div':'.your-box', 'score':0},
     'dealer':{'scoreSpan': '#dealer-result', 'div':'.dealer-box', 'score':0},
+    'cards': ['5', '6', '7', '8', '9', '10', 'K', 'J', 'Q', 'A'],
+    'cardsMap': {'5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'K':10, 'J':10, 'Q':10, 'A':[1,11]},
 }
 
 const YOU = blackjackGame['you'];
 const DEALER = blackjackGame['dealer'];
+const CARDS = blackjackGame['cards'];
+const CARDSMAP = blackjackGame['cardsMap'];
 
 const hitSound = new Audio('static/sounds/swish.m4a');
+const winSound = new Audio('static/sounds/cash.mp3');
+const lostSound = new Audio('static/sounds/aww.mp3');
 
 document.querySelector('#hit').addEventListener('click', blackjackHit);
+document.querySelector('#stand').addEventListener('click', blackjackStand)
+document.querySelector('#deal').addEventListener('click', blackjackDeal);
+
 
 function blackjackHit() {
-    let cardImage = document.createElement('img');
-    cardImage.src = 'static/images/q.png';
-    cardImage.height = "200px";
-    document.querySelector(YOU['div']).appendChild(cardImage);
-    hitSound.play();
+    let cards = randomCard();
+    showCard(cards,YOU);
+    updateScore(cards,YOU);
+    showScore(YOU);
+}
+
+function blackjackStand(){
+    let cards = randomCard();
+    showCard(cards,DEALER);
+    updateScore(cards,DEALER);
+    showScore(DEALER);
+}
+
+function blackjackDeal() {
+    showResult(computeWinner());
+    removeCard(YOU,DEALER);
+    removeScore(YOU,DEALER);
+}
+
+function showCard(card,activePlayer) {
+    if(activePlayer['score'] <= 21) {
+        let cardImage = document.createElement('img');
+        cardImage.src = `static/images/${card}.png`;
+        document.querySelector(activePlayer['div']).appendChild(cardImage);
+        hitSound.play();
+    }
+}
+
+
+function removeCard(you,dealer) {
+    let yourImage = document.querySelector(you['div']).querySelectorAll('img');
+    let dealerImage = document.querySelector(dealer['div']).querySelectorAll('img');
+    for(let i=0; i<yourImage.length; i++) {
+        yourImage[i].remove();
+    }
+
+    for(let i=0; i<dealerImage.length; i++) {
+        dealerImage[i].remove();
+    }
+}
+
+function removeScore(you,dealer) {
+    you['score'] = 0;
+    dealer['score'] = 0;
+    document.querySelector(you['scoreSpan']).textContent = 0;
+    document.querySelector(dealer['scoreSpan']).textContent = 0;
+    document.querySelector(you['scoreSpan']).style.color = '#ffffff';
+    document.querySelector(dealer['scoreSpan']).style.color = '#ffffff';
+}
+
+function randomCard() {
+    let randomIndex = Math.floor(Math.random() * 10);
+    return CARDS[randomIndex];
+}
+
+function updateScore(card,activePlayer) {
+    if(card === 'A') {
+        //if adding 11 keeps you below 21, add 11, otherwise add 1
+        if(activePlayer['score'] + CARDSMAP[card][1] <= 21){
+            activePlayer['score'] += CARDSMAP[card][1];
+        } else {
+            activePlayer['score'] += CARDSMAP[card][0];
+        }
+    } else {
+    activePlayer['score'] += CARDSMAP[card];
+    }
+}
+
+function showScore(activePlayer) {
+    if(activePlayer['score'] > 21) {
+        document.querySelector(activePlayer['scoreSpan']).textContent = 'BUST!!!';
+        document.querySelector(activePlayer['scoreSpan']).style.color = 'red';
+    }else {
+        document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
+    }
+}
+
+
+// compute winner and return who won 
+
+function computeWinner() {
+    let winner ;
+    if(YOU['score'] <= 21){
+        if (YOU['score'] > DEALER['score'] || DEALER['score'] > 21) {
+            winner = YOU;
+            console.log('you won!');
+
+        }else if (YOU['score'] < DEALER['score']) {
+            winner = DEALER;
+            console.log('Dealer won!!!');
+
+        }else if (YOU['score'] === DEALER['score']) {
+            console.log('Its draw');
+            console.log('loda');
+        }
+
+    }else if (YOU['score'] > 21 && DEALER['score'] <= 21) {
+        winner = DEALER;
+        console.log('Dealer won!!!');
+
+    }else if (YOU['score'] > 21 && DEALER['score'] > 21) {
+        console.log('its Draw!!!');
+    }
+    return winner;
+}
+
+
+function showResult(winner) {
+    let message, messageColor; 
+    if(winner === YOU) {
+        message = "You won!";
+        messageColor = "green";
+        winSound.play();
+    } else if (winner === DEALER) {
+        message = "You lost!";
+        messageColor = "red";
+        lostSound.play();
+    }else {
+        message = "You drew";
+        messageColor = "black";
+    }
+
+    document.querySelector('#flex-box-result-5').textContent = message;
+    document.querySelector('#flex-box-result-5').style.color = messageColor;
 }
