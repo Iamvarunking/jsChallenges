@@ -221,18 +221,23 @@ function blackjackHit() {
     }
 }
 
-function blackjackStand(){
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function blackjackStand(){
      if (blackjackGame['isHit'] === true) {
         blackjackGame['isStand'] = true ;
-        let cards = randomCard();
-        showCard(cards,DEALER);
-        updateScore(cards,DEALER);
-        showScore(DEALER);
-    
-        if (DEALER['score'] > 15) {
-            blackjackGame['turnOver'] = true ;
-            showResult(computeWinner());        
+        while (DEALER['score'] < 16 && blackjackGame['isStand'] === true) {
+            let cards = randomCard();
+            showCard(cards,DEALER);
+            updateScore(cards,DEALER);
+            showScore(DEALER);
+            await sleep(1000);
         }
+
+        blackjackGame['turnOver'] = true ;
+        showResult(computeWinner());        
      }
 }
 
@@ -339,6 +344,7 @@ function computeWinner() {
 
 function showResult(winner) {
     let message, messageColor; 
+   if (blackjackGame['turnOver'] === true) {
     if(winner === YOU) {
         document.querySelector('.wins').textContent = blackjackGame['wins'];
         message = "You won!";
@@ -357,4 +363,5 @@ function showResult(winner) {
 
     document.querySelector('#flex-box-result-5').textContent = message;
     document.querySelector('#flex-box-result-5').style.color = messageColor;
+   }
 }
