@@ -192,6 +192,9 @@ let blackjackGame = {
     'wins':0,
     'losts':0,
     'draws':0,
+    'isStand':false,
+    'isHit':false,
+    'turnOver':false,
 }
 
 const YOU = blackjackGame['you'];
@@ -209,26 +212,40 @@ document.querySelector('#deal').addEventListener('click', blackjackDeal);
 
 
 function blackjackHit() {
-    let cards = randomCard();
-    showCard(cards,YOU);
-    updateScore(cards,YOU);
-    showScore(YOU);
-}
-
-function blackjackStand(){
-    let cards = randomCard();
-    showCard(cards,DEALER);
-    updateScore(cards,DEALER);
-    showScore(DEALER);
-
-    if (DEALER['score'] > 15) {
-        showResult(computeWinner());
+    if(blackjackGame['isStand'] === false){
+        let cards = randomCard();
+        showCard(cards,YOU);
+        updateScore(cards,YOU);
+        showScore(YOU);
+        blackjackGame['isHit'] = true
     }
 }
 
+function blackjackStand(){
+     if (blackjackGame['isHit'] === true) {
+        blackjackGame['isStand'] = true ;
+        let cards = randomCard();
+        showCard(cards,DEALER);
+        updateScore(cards,DEALER);
+        showScore(DEALER);
+    
+        if (DEALER['score'] > 15) {
+            blackjackGame['turnOver'] = true ;
+            showResult(computeWinner());        
+        }
+     }
+}
+
 function blackjackDeal() {
-    removeCard(YOU,DEALER);
-    removeScore(YOU,DEALER);
+    if (blackjackGame['turnOver'] === true){
+        removeCard(YOU,DEALER);
+        removeScore(YOU,DEALER);
+        document.querySelector('#flex-box-result-5').textContent = "Let's play";
+        document.querySelector('#flex-box-result-5').style.color = "black";
+        blackjackGame['isStand'] = false;
+        blackjackGame['turnOver'] = false;
+        blackjackGame['isHit'] = false;
+    }
 }
 
 function showCard(card,activePlayer) {
